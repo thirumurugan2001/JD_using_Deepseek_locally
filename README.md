@@ -76,24 +76,24 @@ This file initializes the Flask application and defines the routes.
 - The `/result` route handles job description generation by:
   1. Extracting form data.
   2. Validating data using `validateData()`.
-  3. Calling `openai()` to generate the job description.
+  3. Calling `deepseek()` to generate the job description.
   4. Rendering the output or error page.
 
 ### `controller.py`
 Contains helper functions for data validation and AI integration.
 - `validateData(data)`: Checks if all required fields are non-empty.
-- Calls `openai(data)` to process the job description.
+- Calls `deepseek(data)` to process the job description.
 
 ### `ConnectAPI.py`
 Contains AI-related functions.
-- `openai(data)`: Uses Ollama to generate a job description based on the input fields.
+- `deepseek(data)`: Uses Ollama to generate a job description based on the input fields.
 - `extract_json_from_text(text)`: Extracts JSON from the AI response using regex.
 
 ## Expected AI Response Format
 The AI returns job descriptions in JSON format with the following structure:
 ```json
 {
-    "Company name": "Zeb",
+    "Company name": "TCS",
     "Location": "Chennai,Coimbatore",
     "Experience": "5",
     "Type": "Full Time",
