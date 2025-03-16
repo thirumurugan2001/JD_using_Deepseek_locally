@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 5px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            text-align: left;
+        }
+        ul {
+            padding-left: 20px;
+            list-style-type: square;
+        }
+        li {
+            color: #333;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button class="btn" onclick="goHome()">Home</button>
+            <button class="btn" onclick="downloadJobDetails()">Download</button>
+        </div>
+
+        <h1>{{ result['Job Title'] }}</h1>
+        <h2>Company: {{ result['Company name'] }}</h2>
+        <p><strong>Location:</strong> {{ result['Location'] }}</p>
+        <p><strong>Job Posted On:</strong> {{ result['Post on'] }}</p>
+        <p><strong>Experience Required:</strong> {{ result['Experience'] }}</p>
+        <p><strong>Employment Type:</strong> {{ result['Type'] }}</p>
+        
+        <div class="section">
+            <h2>Job Summary</h2>
+            <p>{{ result['Job Summary'] }}</p>
+        </div>
+        
+        <div class="section">
+            <h2>Key Responsibilities</h2>
+            <ul>
+                {% for responsibility in result['Key Responsibilities'] %}
+                    <li>{{ responsibility }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Required Skills & Qualifications</h2>
+            <ul>
+                {% for skill in result['Required Skills & Qualifications'] %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function goHome() {
+            window.location.href = "/";
+        }
+        function downloadJobDetails() {
+            var jobTitle = "{{ result['Job Title'] }}";
+            var companyName = "{{ result['Company name'] }}";
+            var location = "{{ result['Location'] }}";
+            var postOn = "{{ result['Post on'] }}";
+            var experience = "{{ result['Experience'] }}";
+            var employmentType = "{{ result['Type'] }}";
+            var jobSummary = "{{ result['Job Summary'] }}";
+            var responsibilities = "{% for responsibility in result['Key Responsibilities'] %} - {{ responsibility }}\n{% endfor %}";
+            var skills = "{% for skill in result['Required Skills & Qualifications'] %} - {{ skill }}\n{% endfor %}";
+
+            var content = `Job Title: ${jobTitle}\nCompany: ${companyName}\nLocation: ${location}\nJob Posted On: ${postOn}\nExperience Required: ${experience}\nEmployment Type: ${employmentType}\n\nJob Summary:\n${jobSummary}\n\nKey Responsibilities:\n${responsibilities}\n\nRequired Skills & Qualifications:\n${skills}`;
+            
+            var blob = new Blob([content], { type: "application/msword" });
+            saveAs(blob, "Job_Details.doc");
+        }
+    </script>
+</body>
+</html>
