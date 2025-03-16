@@ -29,8 +29,8 @@ This project is a Flask-based web application that generates job descriptions ba
 ### Steps to Run
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/thirumurugan2001/JD_using_Deepseek_locally.git
+   cd JD_using_Deepseek_locally
    ```
 2. Install dependencies:
    ```bash
